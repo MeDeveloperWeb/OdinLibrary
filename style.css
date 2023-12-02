@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: -50px;
+    height: 100vh;
+    padding: 1vh 1vw 0 1vw;
+    margin: 0;
+    font-family: 'Goudy Bookletter 1911', serif;
+
+}
+
+.shelf-cont {
+    height: 99vh;
+    width: 98vw;
+    border-top: 10px solid transparent;
+    border-image: url(media/wood.jpeg) 30 round;
+
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+
+    .left, .right {
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+    }
+
+    .empty-space {
+        background: url(media/space.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        grid-column: 2 / 3;
+    }
+}
+
+.book-cont{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    grid-template-rows: 1fr;
+    grid-auto-rows: 0px;
+    background: url(media/shelf-left.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-items: end;
+    border: 10px solid transparent;
+    border-top: 0px;
+    border-image: url(media/wood.jpeg) 30 round;
+}
+
+.right .book-cont {
+    background: url(media/right-shelf.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.book {
+    width: 100%;
+    height: 90%;
+    writing-mode: vertical-lr;
+    text-orientation:sideways-right;
+    text-align: center;
+    padding: 0 0 0 1rem;
+
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #999;
+    font-size: 1.5rem;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+
+    cursor: grab;
+    
+
+    max-height: calc(99vh/6 - 90px/6);
+    background: url(media/book.jpeg);
+
+    &.yellow {
+        height: 100%;
+    }
+    
+    &.brown {
+        height: 97%;
+    }
+    
+    &.green {
+        height: 92%;
+    }
+    
+    &.blue {
+        height: 95%;
+    }
+
+    &::before {
+        content: attr(is-read);
+        color: green;
+    }
+}
+
+.yellow {
+    filter: sepia(1) brightness(1.5) contrast(0.9);
+    background-color: rgb(155, 155, 22);
+}
+
+.brown {
+    filter: hue-rotate(45deg) sepia(0.5) brightness(1.5) contrast(1.4);
+    background-color: rgb(95, 18, 18);
+}
+
+.green {
+    filter: sepia(1) hue-rotate(90deg);
+    background-color: rgb(119, 89, 32);
+}
+
+.blue {
+    filter: sepia(1) hue-rotate(180deg);
+    background-color: rgb(95, 91, 91);
+}
+
+
+.empty-space {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    position: relative;
+
+    .get-form {
+        font-size: 20rem;
+        color: rgba(56, 10, 10, 0.76);
+        border: 0;
+        background: transparent;
+        /* box-shadow: 0 0 5px 5px #999; */
+        padding: 0;
+        padding-bottom: 10px;
+        margin: 0;
+        width: auto;
+        outline: none;
+        text-shadow: 5px 5px 0 #999;
+
+        position: absolute;
+        z-index: 0;
+
+        grid-row: 1 / 2;
+
+        &:active {
+            text-shadow: 0px 0px 0px transparent;
+            transform: scale(-97%);
+        }
+
+    }
+}
+
+
+form.add-book-form {
+    width: min(100%, 300px);
+    display: grid;
+    gap: 1rem;
+
+    position: absolute;
+    z-index: 1;
+    grid-row: 1 / 2;
+
+
+    visibility: hidden;
+}
+
+label:has(+ [type="text"],+ [type="number"]){
+    position: relative;
+    top: 2rem;
+    left: 1rem;
+    width: fit-content;
+    cursor: pointer;
+
+    z-index: 4;
+    
+}
+
+label:has(+ input[type="text"]:valid), label:has(+ input[type="number"]:valid) {
+    display: none;
+}
+
+label:has(+ input[type="text"]:focus), label:has(+ input[type="number"]:focus) {
+    top: 0.5rem;
+    background-color: rgb(56, 10, 10);
+    background-size: cover;
+    color: white;
+    transition: 0.3s;
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    display: block;
+}
+
+input:is([type="text"], [type="number"]) {
+    outline: none;
+    border: 2px solid rgb(59, 6, 6);
+    border-radius: 5px;
+    width: 100%;
+    height: 3rem;
+
+    &:focus {
+        border-width: 3px;
+    }
+}
+
+form input[type="checkbox"] + label {
+    color: rgb(59, 6, 6);
+    font-size: 1.2rem;
+    text-shadow: 2px 2px 0 #999;
+}
+
+input[type="submit"] , button{
+    background: url(media/wood.jpeg) rgb(41, 6, 6);
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form input {
+    box-shadow: 1px 1px 0px #999,
+                2px 2px 0px #999,
+                3px 3px 0px #999,
+                4px 4px 0px #999,
+                5px 5px 0px #999,
+                6px 6px 0px #999;
+
+    cursor: pointer;
+}
+
+input:focus {
+    box-shadow: none;
+    transform: scale(105%);
+}
+
+.book-viewer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+
+    grid-row: 2 / 3;
+
+    visibility: hidden;
+
+    & button.remove {
+        background: rgb(153, 25, 25);
+    }
+}
+
+.book-preview {
+    height: min(400px, 90%);
+    width: min(300px, 90%);
+    background: url(media/bookcover.jpg) rgb(163, 108, 6);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border: 1px solid;
+    border-radius: 10px;
+    color: #c2c2c2;
+    text-shadow: 1px 1px 0 #999;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1rem 0.5rem 1rem;
+    font-size: 1.2rem;
+
+    .name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 55%;
+        height: 70%;
+    }
+
+    .author-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 24ch;
+        height: 2rem;
+        padding: 0 2rem;
+        align-self: self-end;
+
+    }
+}
+

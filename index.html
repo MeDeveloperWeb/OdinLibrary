@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Library</title>
+</head>
+<body>
+    <div class="shelf-cont">
+        <div class="left shelf">
+            <div class="book-cont" id="shelf01"></div>
+            <div class="book-cont" id="shelf03"></div>
+            <div class="book-cont" id="shelf05"></div>
+            <div class="book-cont" id="shelf07"></div>
+            <div class="book-cont" id="shelf09"></div>
+            <div class="book-cont" id="shelf11"></div>
+            <!-- <div class="shadow-el"></div> -->
+        </div>
+
+        <div class="empty-space">
+
+            <button type="button" class="get-form">
+                ⊕
+            </button>
+            
+            <form class="add-book-form">
+                <div>
+                    <label for="name">Book's Name</label>
+                    <input type="text" name="name" id="name" required autofocus>
+                </div>
+                <div>
+                    <label for="author">Author's Name</label>
+                    <input type="text" name="author" id="author" required>
+                </div>
+                <div>
+                    <label for="pages">Page Count</label>
+                    <input type="number" name="pages" id="pages" required>
+                </div>
+                <div>
+                    <input type="checkbox" name="read" id="read">
+                    <label for="read">Mark as Read</label>
+                </div>
+                <input type="submit" value="Add Book">
+            </form>
+
+            <div class="book-viewer">
+                <div class="book-preview">
+                    <div class="pages" title="Page Count">54</div>
+                    <div class="name" title="Book Name">
+                        Psychology of Money
+                    </div>
+                    <div class="author-name" title="Author Name">By <span class="author">
+                    </span></div>
+                    <div class="have-read">
+                        <input type="checkbox" name="read" id="have-read" class="read">
+                        <label for="have_read">Completed</label>
+                    </div>
+                </div>
+                <div class="book-tools">
+                    <button class="return">Return to Library</button>
+                    <button class="remove">Remove From Library</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="right shelf">
+            <div class="book-cont" id="shelf02"></div>
+            <div class="book-cont" id="shelf04"></div>
+            <div class="book-cont" id="shelf06"></div>
+            <div class="book-cont" id="shelf08"></div>
+            <div class="book-cont" id="shelf10"></div>
+            <div class="book-cont" id="shelf12"></div>
+        </div>
+    </div>
+</body>
+</html>
