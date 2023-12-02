@@ -175,6 +175,12 @@ body {
 
         bottom: 10vh;
     }
+
+    & .book-tools { 
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }
 
 
