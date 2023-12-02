@@ -3,6 +3,7 @@ const shelf = document.querySelector(".book-cont");
 const book_shelves = document.querySelector(".shelf-cont");
 
 const form_viewer = document.querySelector("button.get-form");
+const remove_all_el = document.querySelector("button.remove-all");
 
 const book_viewer = document.querySelector(".book-viewer");
 
@@ -20,7 +21,7 @@ let book_in_preview;
 
 form_viewer.addEventListener("click", () => {
     book_form.style.visibility = "visible";
-    form_viewer.style.visibility = "hidden";
+    form_viewer.style.visibility = book_viewer.style.visibility = "hidden";
 })
 
 book_form.onsubmit = (e) => {
@@ -51,6 +52,10 @@ book_shelves.addEventListener("click", (e) => {
         book_viewer.style.visibility = "visible";
         // Hide current book from Shelf
         e.target.style.visibility = "hidden";
+
+        // Hide all other elements on the div
+        form_viewer.style.visibility = remove_all_el.style.visibility = book_form.style.visibility = "hidden";
+
         book_in_preview = e.target.id
         // Show book in preview
         previewBook(myLibrary[+book_in_preview]);
@@ -66,12 +71,18 @@ document.querySelector("#have-read").addEventListener("change", (e) => {
 document.querySelector(".book-viewer button.return").addEventListener("click", () => {
     document.getElementById(book_in_preview).style.visibility = "visible";
     book_viewer.style.visibility = "hidden";
+    // Show button to add and remove books 
+    form_viewer.style.visibility = remove_all_el.style.visibility = "visible";
+    
 });
 
 document.querySelector(".book-viewer button.remove").addEventListener("click", () => {
     removeBookFromLibrary(book_in_preview);
     book_in_preview = "";
     book_viewer.style.visibility = "hidden";
+
+    // Show button to add and remove books 
+    form_viewer.style.visibility = remove_all_el.style.visibility = "visible";
     showChangesOnUI();
 });
 
@@ -204,7 +215,7 @@ function removeBookFromLibrary(id) {
 
 /*************************************************************************************************************************************************************** */
 
-//Testing purposes
+// For Populating The Library
 
 // Function to generate a random book name
 function generateRandomName() {
@@ -229,8 +240,10 @@ function createRandomBook() {
     return new Book(name, author, pages, read);
 }
 
-// Create 20 random book objects and add them to the library
-for (let i = 0; i < 50; i++) {
+// Fill Half of book Shelf random book objects and add them to the library
+const half_shelf_size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length * 6;
+for (let i = 0; i < half_shelf_size- 2; i++) {
+    
     const randomBook = createRandomBook();
     myLibrary.push(randomBook);
 }

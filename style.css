@@ -128,15 +128,14 @@ body {
 
 
 .empty-space {
-    display: grid;
-    place-items: center;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     position: relative;
 
     .get-form {
-        font-size: 20rem;
+        font-size: min(20rem, 40vw);
         color: rgba(56, 10, 10, 0.76);
         border: 0;
         background: transparent;
@@ -158,6 +157,23 @@ body {
             transform: scale(-97%);
         }
 
+    }
+
+    & .remove-all {
+        position: absolute;
+        grid-row: 1 / 2;
+        bottom: 2rem;
+        background: rgba(56, 10, 10, 0.76);
+        font-size: 1.2rem;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        box-shadow: 1px 1px 0px #999,
+        2px 2px 0px #999,
+        3px 3px 0px #999,
+        4px 4px 0px #999,
+        5px 5px 0px #999,
+        6px 6px 0px #999;
+
+        bottom: 10vh;
     }
 }
 
