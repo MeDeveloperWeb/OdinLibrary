@@ -7,6 +7,10 @@ const remove_all_el = document.querySelector("button.remove-all");
 
 const book_viewer = document.querySelector(".book-viewer");
 
+let col_size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length;
+
+let full = false;
+
 // Color for books
 const bookColor = [
     "brown",
@@ -35,10 +39,19 @@ book_form.onsubmit = (e) => {
 
     let book = addBookToLibrary(data);
 
-    if (book) addBookOnUI(book);
+    if (book) {
+        addBookOnUI(book);
+        remove_all_el.style.visibility = "visible";
+    }
     // If book not added
-    else alert("Full")
+    else alert("Library already Full! Remove some Books to add new ones.")
 }
+
+remove_all_el.addEventListener("click", () => {
+    myLibrary.length = 0;
+    remove_all_el.style.visibility = "hidden";
+    showChangesOnUI();
+})
 
 book_shelves.addEventListener("click", (e) => {
     // If clicked on a book in shelf
@@ -84,6 +97,7 @@ document.querySelector(".book-viewer button.remove").addEventListener("click", (
     // Show button to add and remove books 
     form_viewer.style.visibility = remove_all_el.style.visibility = "visible";
     showChangesOnUI();
+    if (myLibrary.length === 0) remove_all_el.style.visibility = "hidden";
 });
 
 window.onresize = () => showChangesOnUI();
@@ -113,7 +127,6 @@ function formatFormData(nodeList) {
  * Creates all the books in the UI
  */
 function showChangesOnUI() {
-    let col_size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length;
 
     document.querySelectorAll(".book-cont").forEach(el => el.replaceChildren());
 
@@ -132,6 +145,16 @@ function showChangesOnUI() {
         if (row) row.appendChild(new_book);  
         
     });
+
+    col_size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length;
+    if (myLibrary.length >= col_size * 12) {
+        full = true;
+        form_viewer.style.visibility = "hidden";
+    }
+    else {
+        full = false;
+        form_viewer.style.visibility = "visible";
+    }
 }
 
 /**
@@ -139,8 +162,7 @@ function showChangesOnUI() {
  * @param {Book} book Book data to be added
  */
 function addBookOnUI(book) {
-    const id = myLibrary.length;
-    const col_size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length;
+    const id = myLibrary.length ? myLibrary.length - 1 : 0;
 
     // Book HTML element
     let new_book = document.createElement("div");
@@ -156,6 +178,10 @@ function addBookOnUI(book) {
 
     // Append Book
     document.querySelector(row_id).appendChild(new_book);
+
+    if (full) form_viewer.style.visibility = "hidden";
+
+    remove_all_el.style.visibility = "visible";
 
 }
 
@@ -199,17 +225,20 @@ function Book(name, author, pages, read) {
 }
 
 function addBookToLibrary({name, author, pages, read}) {
-    let size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length * 12;
+    let size = col_size * 12;
 
     if (myLibrary.length >= size) return null;
     let book = new Book(name, author, pages, read);
     myLibrary.push(book);
+    if (myLibrary.length === size) full = true;
     return book;
 }
 
 function removeBookFromLibrary(id) {
     let book = myLibrary[id];
+    console.log("removing" ,id)
     myLibrary.splice(+id, 1);
+
     return book;
 }
 
@@ -241,8 +270,8 @@ function createRandomBook() {
 }
 
 // Fill Half of book Shelf random book objects and add them to the library
-const half_shelf_size = getComputedStyle(shelf).getPropertyValue("grid-template-columns").split(" ").length * 6;
-for (let i = 0; i < half_shelf_size- 2; i++) {
+
+for (let i = 0; i < col_size * 6 - 2; i++) {
     
     const randomBook = createRandomBook();
     myLibrary.push(randomBook);
